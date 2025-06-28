@@ -1,0 +1,7 @@
+theme = "iTerm2 Tango Dark"
+font-family = "Fira Code"
+background-opacity = .6
+background-blur = 8
+confirm-close-surface = false
+font-size = 12
+font-thicken = true

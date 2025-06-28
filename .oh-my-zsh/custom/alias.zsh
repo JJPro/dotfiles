@@ -1,0 +1,7 @@
+alias cdp='cd /Users/jasonj/Nextcloud/国泰君安/工作'
+alias gou='open `git remote get-url origin`'
+alias ls='eza --icons --group-directories-first'
+alias ltr='ls -lr --sort oldest'
+alias latr='l -r --sort oldest'
+alias p='pnpm'
+alias c='cursor'
