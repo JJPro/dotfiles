@@ -73,7 +73,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git docker-compose)
+plugins=(git docker-compose tmux tldr)
 
 source $ZSH/oh-my-zsh.sh
 source $GTJA/scripts/gtja.sh
@@ -104,13 +104,9 @@ source $GTJA/scripts/gtja.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# Amazon Q post block. Keep at the bottom of this file.
-[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
-export VUE_EDITOR="subl"
 # setup fnm env vars
 eval "$(fnm env --use-on-cd --shell zsh)"
+
 # pnpm
 export PNPM_HOME="/Users/jasonj/Library/pnpm"
 case ":$PATH:" in
@@ -119,5 +115,13 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-# zoxide
+# zoxide/cd
 eval "$(zoxide init --cmd cd zsh)"
+
+eval $(thefuck --alias)
+
+# fzf
+source <(fzf --zsh)
+
+# Amazon Q post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
