@@ -1,7 +1,7 @@
 theme = "iTerm2 Tango Dark"
 # theme = "CobaltNext-Minimal"
 # theme = "catppuccin-mocha"
-font-family = "Fira Code"
+font-family = "FiraCode Nerd Font"
 background-opacity = .8
 background-blur = 8
 confirm-close-surface = false
