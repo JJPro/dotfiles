@@ -1,0 +1,1082 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "anytype",
+  "title": "Anytype",
+  "description": "Create, browse, search and edit within Anytype - right at your fingertips, anywhere on your Mac.",
+  "icon": "anytype-icon.png",
+  "author": "jmetrikat",
+  "owner": "any",
+  "access": "public",
+  "categories": [
+    "Applications",
+    "Productivity"
+  ],
+  "license": "MIT",
+  "commands": [
+    {
+      "name": "create-object",
+      "title": "Create Object",
+      "subtitle": "Anytype",
+      "description": "Create a new object.",
+      "mode": "view"
+    },
+    {
+      "name": "browse-spaces",
+      "title": "Browse Spaces",
+      "subtitle": "Anytype",
+      "description": "Browse your spaces one by one.",
+      "mode": "view"
+    },
+    {
+      "name": "search-anytype",
+      "title": "Search Anytype",
+      "subtitle": "Anytype",
+      "description": "Search objects globally in all spaces.",
+      "mode": "view"
+    },
+    {
+      "name": "add-to-list",
+      "title": "Add to List",
+      "subtitle": "Anytype",
+      "description": "Add an existing object to a list.",
+      "mode": "view"
+    },
+    {
+      "name": "create-type",
+      "title": "Create Type",
+      "subtitle": "Anytype",
+      "description": "Create a new type.",
+      "mode": "view"
+    }
+  ],
+  "tools": [
+    {
+      "name": "add-to-list",
+      "title": "Add to List",
+      "description": "Add an object to a specific list in a specific space.",
+      "instructions": "Add an object to a list.\nThis function adds the specified object to the specified list.",
+      "input": {
+        "type": "object",
+        "properties": {
+          "spaceId": {
+            "type": "string",
+            "description": "The unique identifier of the space to add the object to.\nThis value can be obtained from the `getSpaces` tool."
+          },
+          "listId": {
+            "type": "string",
+            "description": "The unique identifier of the list to add the object to.\nThis value can be obtained from the `search-anytype` or `search-space` tools by searching for type of 'collection'."
+          },
+          "objectId": {
+            "type": "string",
+            "description": "The unique identifier of the object to add to the list.\nThis value can be obtained from the `search-anytype`, `search-space` or `create-object` tools."
+          }
+        },
+        "required": [
+          "spaceId",
+          "listId",
+          "objectId"
+        ]
+      },
+      "confirmation": false
+    },
+    {
+      "name": "create-object",
+      "title": "Create Object",
+      "description": "Create an object of a specific type in a specific space.",
+      "instructions": "Create a new object in the specified space.\nThis function creates an object with the specified details in the specified space.\nThe object is created with the specified name, icon, description, body.\nWhen creating objects of type 'bookmark', ensure the source URL is provided. The icon, name, and description should not be manually set, as they will be automatically populated upon fetching the URL.",
+      "input": {
+        "type": "object",
+        "properties": {
+          "spaceId": {
+            "type": "string",
+            "description": "The unique identifier of the space to create the object in.\nThis value can be obtained from the `getSpaces` tool."
+          },
+          "type_key": {
+            "type": "string",
+            "description": "The key of the type of object to create.\nThis value can be obtained from the `getTypes` tool."
+          },
+          "type_id": {
+            "type": "string",
+            "description": "The unique identifier of the object type to create.\nThis value can be obtained from the `getTypes` tool."
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the object to create.\nThis value should be chosen based on the user's input."
+          },
+          "icon": {
+            "type": "string",
+            "description": "The icon of the object to create.\nThis value should be chosen based on the user's input.\nIf not given, choose the most suitable emoji."
+          },
+          "description": {
+            "type": "string",
+            "description": "The description of the object to create.\nThis value should be chosen based on the user's input.\nIf not given, set as an empty string."
+          },
+          "body": {
+            "type": "string",
+            "description": "The body of the object to create.\nThis value should be chosen based on the user's input and can include markdown syntax.\nCollections and Sets can't have a body."
+          },
+          "source": {
+            "type": "string",
+            "description": "The URL of the bookmark, applicable when creating an object with type_key='bookmark'.\nThis value should be chosen based on the user's input.\nIf not given, set as an empty string."
+          }
+        },
+        "required": [
+          "spaceId",
+          "type_key",
+          "type_id",
+          "name",
+          "icon"
+        ]
+      },
+      "confirmation": true
+    },
+    {
+      "name": "get-members",
+      "title": "Get Members",
+      "description": "Get all members of a specific space.",
+      "instructions": "Retrieve a list of members in the specified space.\nThis function queries the specified space and returns a list of members.\nA status of 'joining' signifies that the member is requesting to join the space, whereas 'active' indicates they are already a member.",
+      "input": {
+        "type": "object",
+        "properties": {
+          "spaceId": {
+            "type": "string",
+            "description": "The unique identifier of the space to get members from.\nThis value can be obtained from the `getSpaces` tool."
+          }
+        },
+        "required": [
+          "spaceId"
+        ]
+      },
+      "confirmation": false
+    },
+    {
+      "name": "get-object",
+      "title": "Get Object",
+      "description": "Get the content and properties of a specific object.",
+      "instructions": "Retrieve a specific object from a space.\nThis function queries the specified space and returns the object\nthat matches the specified ID.",
+      "input": {
+        "type": "object",
+        "properties": {
+          "spaceId": {
+            "type": "string",
+            "description": "The unique identifier of the space to get the object from.\nThis value can be obtained from the `getSpaces` tool."
+          },
+          "objectId": {
+            "type": "string",
+            "description": "The unique identifier of the object to retrieve.\nThis value can be obtained from the `search-anytype` or `search-space` tools."
+          }
+        },
+        "required": [
+          "spaceId",
+          "objectId"
+        ]
+      },
+      "confirmation": false
+    },
+    {
+      "name": "get-list-items",
+      "title": "Get List Items",
+      "description": "Get all objects in a specific list in a specific space.",
+      "instructions": "Get all items in a list.\nThis function queries all available items in a list and returns a list of objects.",
+      "input": {
+        "type": "object",
+        "properties": {
+          "spaceId": {
+            "type": "string",
+            "description": "The unique identifier of the space to get items from.\nThis value can be obtained from the `getSpaces` tool."
+          },
+          "listId": {
+            "type": "string",
+            "description": "The unique identifier of the list to get items from.\nThis value can be obtained from the `search-space`or `search-anytype` tool and specifying types as 'collection'."
+          }
+        },
+        "required": [
+          "spaceId",
+          "listId"
+        ]
+      },
+      "confirmation": false
+    },
+    {
+      "name": "get-spaces",
+      "title": "Get Spaces",
+      "description": "Get all spaces in Anytype.",
+      "instructions": "Retrieve a list of spaces from the API.\nThis function queries all available spaces and returns a list of spaces.",
+      "confirmation": false
+    },
+    {
+      "name": "get-types",
+      "title": "Get Types",
+      "description": "Get types in a specific space.",
+      "instructions": "Retrieve a list of all types in a space.\nThis function queries the specified space and returns a list of types that are available in the space.\nShould always be called when user requests objects of a specific type to retrieve type_key.",
+      "input": {
+        "type": "object",
+        "properties": {
+          "spaceId": {
+            "type": "string",
+            "description": "The unique identifier of the space to get types from.\nThis value can be obtained from the `getSpaces` tool."
+          }
+        },
+        "required": [
+          "spaceId"
+        ]
+      },
+      "confirmation": false
+    },
+    {
+      "name": "remove-from-list",
+      "title": "Remove from List",
+      "description": "Remove an object from a specific list in a specific space.",
+      "instructions": "Remove objects from a list.\nThis function removes the specified objects from the specified list.",
+      "input": {
+        "type": "object",
+        "properties": {
+          "spaceId": {
+            "type": "string",
+            "description": "The unique identifier of the space to remove the object from.\nThis value can be obtained from the `getSpaces` tool."
+          },
+          "listId": {
+            "type": "string",
+            "description": "The unique identifier of the list to remove the object from.\nThis value can be obtained from the `search-space` or `search-anytype` tools by searching for type of 'collection'."
+          },
+          "objectIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The unique identifiers of the objects to remove from the list.\nThose values can be obtained from the `search-anytype`, `search-space`, `create-object`, `get-list-items` tools."
+          }
+        },
+        "required": [
+          "spaceId",
+          "listId",
+          "objectIds"
+        ]
+      },
+      "confirmation": false
+    },
+    {
+      "name": "search-anytype",
+      "title": "Search in Anytype",
+      "description": "Search for objects globally in all spaces.",
+      "instructions": "Perform a global search for objects across all spaces.\nThis function queries all available spaces and returns a list of objects\nthat match the search criteria.\nFor empty search query and sort criterion, most recently modified objects are returned.",
+      "input": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The search query for the title of the page.\nNote: Only plain text is supported; operators are not allowed."
+          },
+          "types": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The types of objects to search for, identified by their type_key or id.\nThis value can be obtained from the `getTypes` tool.\nWhen user asks for 'list' objects, search for 'set' and 'collection' types.\nIf no types are specified, the search will include all types of objects."
+          },
+          "sort": {
+            "type": "object",
+            "properties": {
+              "direction": {
+                "type": "string",
+                "description": "The sorting direction for the search results.\nThis value can be either \"asc\" (ascending) or \"desc\" (descending).\nDefault value is \"desc\".",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              },
+              "propertyKey": {
+                "type": "string",
+                "description": "The sorting field for the search results.\nThis value can be \"last_modified_date\", \"last_opened_date\", \"created_date\" or \"name\".\nDefault value is \"last_modified_date\".",
+                "enum": [
+                  "created_date",
+                  "last_modified_date",
+                  "last_opened_date",
+                  "name"
+                ]
+              }
+            },
+            "required": [],
+            "description": "Optional sorting options for the search results\n(e.g., sorting direction and field)."
+          }
+        },
+        "required": [
+          "query"
+        ]
+      },
+      "confirmation": false
+    },
+    {
+      "name": "search-space",
+      "title": "Search in Space",
+      "description": "Search for objects in a specific space.",
+      "instructions": "Perform a search for objects within a specific space.\nThis function queries the specified space and returns a list of objects\nthat match the search criteria.\nFor empty search query and sort criterion, most recently modified objects are returned.",
+      "input": {
+        "type": "object",
+        "properties": {
+          "spaceId": {
+            "type": "string",
+            "description": "The unique identifier of the space to search within.\nThis value can be obtained from the `getSpaces` tool."
+          },
+          "query": {
+            "type": "string",
+            "description": "The search query for the title of the page.\nNote: Only plain text is supported; operators are not allowed."
+          },
+          "types": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The types of objects to search for, identified by their type_key or id.\nThis value should be obtained from the `getTypes` tool and must be called if users request to search for objects of a certain type.\nWhen user asks for 'list' objects, search for 'set' and 'collection' types.\nIf no types are specified, the search will include all types of objects."
+          },
+          "sort": {
+            "type": "object",
+            "properties": {
+              "direction": {
+                "type": "string",
+                "description": "The sorting direction for the search results.\nThis value can be either \"asc\" (ascending) or \"desc\" (descending).\nDefault value is \"desc\".",
+                "enum": [
+                  "asc",
+                  "desc"
+                ]
+              },
+              "propertyKey": {
+                "type": "string",
+                "description": "The sorting field for the search results.\nThis value can be \"last_modified_date\", \"last_opened_date\", \"created_date\" or \"name\".\nDefault value is \"last_modified_date\".",
+                "enum": [
+                  "created_date",
+                  "last_modified_date",
+                  "last_opened_date",
+                  "name"
+                ]
+              }
+            },
+            "required": [],
+            "description": "Optional sorting options for the search results\n(e.g., sorting direction and field)."
+          }
+        },
+        "required": [
+          "spaceId",
+          "query"
+        ]
+      },
+      "confirmation": false
+    },
+    {
+      "name": "solve-challenge",
+      "title": "Solve Challenge",
+      "description": "Complete the pairing process with the Anytype desktop app.",
+      "instructions": "Complete the pairing process with the Anytype desktop app.\nThis function obtains the API token by solving the challenge and storing the token in the extension's local storage.",
+      "input": {
+        "type": "object",
+        "properties": {
+          "challengeId": {
+            "type": "string",
+            "description": "The ID of the challenge to solve.\nThis value can be obtained from the `start-challenge` tool."
+          },
+          "code": {
+            "type": "string",
+            "description": "The 4-digit code to solve the challenge.\nThis value must be given by the user."
+          }
+        },
+        "required": [
+          "challengeId",
+          "code"
+        ]
+      },
+      "confirmation": false
+    },
+    {
+      "name": "start-challenge",
+      "title": "Start Challenge",
+      "description": "Start the pairing process with the Anytype desktop app.",
+      "instructions": "Start pairing with the Anytype desktop app.\nShows a 4-digit code in popup of the Anytype desktop app that user needs to enter in the extension.\nShould be called when API authorization fails because of missing or invalid token.",
+      "confirmation": false
+    }
+  ],
+  "ai": {
+    "evals": [
+      {
+        "input": "@anytype add all objects of type 'quick task' to my 'to-do items' list in my personal space",
+        "mocks": {
+          "get-spaces": [
+            {
+              "object": "space",
+              "id": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d",
+              "name": "My Personal Space"
+            }
+          ],
+          "get-types": [
+            {
+              "object": "type",
+              "name": "Task",
+              "id": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1mm",
+              "type_key": "task",
+              "layout": "action"
+            }
+          ],
+          "search-space": [
+            {
+              "object": "object",
+              "name": "First Task",
+              "id": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1ac",
+              "snippet": "This is the snippet of the task."
+            },
+            {
+              "object": "object",
+              "name": "Another Task",
+              "id": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1tz",
+              "snippet": "This is the snippet of another task."
+            },
+            {
+              "object": "object",
+              "id": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1qu",
+              "name": "to-do items",
+              "snippet": "This is the snippet of the list."
+            }
+          ],
+          "add-to-list": []
+        },
+        "expected": [
+          {
+            "callsTool": {
+              "name": "get-spaces",
+              "arguments": {}
+            }
+          },
+          {
+            "callsTool": {
+              "name": "get-types",
+              "arguments": {
+                "spaceId": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d"
+              }
+            }
+          },
+          {
+            "callsTool": {
+              "name": "search-space",
+              "arguments": {
+                "spaceId": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d",
+                "query": {
+                  "or": [
+                    {
+                      "includes": "quick task"
+                    },
+                    {
+                      "includes": "to-do list"
+                    }
+                  ]
+                },
+                "types": {
+                  "or": [
+                    {
+                      "includes": "task"
+                    },
+                    {
+                      "includes": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1mm"
+                    },
+                    {
+                      "includes": [
+                        "collection",
+                        "set"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "callsTool": {
+              "name": "add-to-list",
+              "arguments": {
+                "listId": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1qu",
+                "objectId": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1ac"
+              }
+            }
+          },
+          {
+            "callsTool": {
+              "name": "add-to-list",
+              "arguments": {
+                "listId": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1qu",
+                "objectId": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1tz"
+              }
+            }
+          }
+        ],
+        "usedAsExample": true
+      },
+      {
+        "input": "@anytype create a new page in my personal space explaining the concept of privacy",
+        "mocks": {
+          "get-spaces": [
+            {
+              "object": "space",
+              "id": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d",
+              "name": "My Personal Space"
+            }
+          ],
+          "get-types": [
+            {
+              "object": "type",
+              "name": "Page",
+              "id": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1pp",
+              "type_key": "page",
+              "layout": "basic"
+            }
+          ],
+          "create-object": [
+            {
+              "object": "object",
+              "name": "The Concept of Privacy",
+              "id": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1ff",
+              "spaceId": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d",
+              "type": {
+                "id": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1mm",
+                "name": "Page",
+                "type_key": "page"
+              },
+              "snippet": "This is the snippet of the object."
+            }
+          ]
+        },
+        "expected": [
+          {
+            "callsTool": {
+              "name": "get-spaces",
+              "arguments": {}
+            }
+          },
+          {
+            "callsTool": {
+              "name": "get-types",
+              "arguments": {
+                "spaceId": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d"
+              }
+            }
+          },
+          {
+            "callsTool": {
+              "name": "create-object",
+              "arguments": {
+                "spaceId": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d",
+                "type_key": "page",
+                "name": {
+                  "includes": "Privacy"
+                }
+              }
+            }
+          }
+        ],
+        "usedAsExample": true
+      },
+      {
+        "input": "@anytype how many members are in my personal space?",
+        "mocks": {
+          "get-spaces": [
+            {
+              "object": "space",
+              "id": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d",
+              "name": "My Personal Space"
+            }
+          ],
+          "get-members": [
+            {
+              "object": "member",
+              "name": "Alice",
+              "id": "_participant_bafyreihliylimyqct7vbyc2jqsoanibku612jj4uwwhulx9tctb4qw346q_2lcu0r85yg10d_AAHTtt1wuQEnaYBNZ5Cyfcvs6DqPqxgn8KXDVa4avsUkMuha",
+              "identity": "AAHTtt1wuQEnaYBNZ5Cyfcvs6DqPqxgn8KXDVa4avsUkMuha",
+              "global_name": "alice",
+              "status": "active",
+              "role": "owner"
+            },
+            {
+              "object": "member",
+              "name": "Bob",
+              "id": "_participant_bafyreihliylimyqct5vbyc2jqsoanibku656jj2uwwhulx4tctb4qw346q_1lcu0r85yg10d_ABKbJdn422NCyvSrwD2OW9N4YKbKTToDhWkvKzYLucMUGqun",
+              "identity": "ABKbJdn422NCyvSrwD2OW9N4YKbKTToDhWkvKzYLucMUGqun",
+              "global_name": "bob",
+              "status": "active",
+              "role": "editor"
+            }
+          ]
+        },
+        "expected": [
+          {
+            "callsTool": {
+              "name": "get-spaces",
+              "arguments": {}
+            }
+          },
+          {
+            "callsTool": {
+              "name": "get-members",
+              "arguments": {
+                "spaceId": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d"
+              }
+            }
+          },
+          {
+            "includes": "2"
+          }
+        ],
+        "usedAsExample": true
+      },
+      {
+        "input": "@anytype show all items in my list called 'recipes' in my personal space",
+        "mocks": {
+          "get-spaces": [
+            {
+              "object": "space",
+              "id": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d",
+              "name": "My Personal Space"
+            }
+          ],
+          "search-space": [
+            {
+              "object": "object",
+              "name": "recipes",
+              "id": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1ac",
+              "snippet": "This is a collection of recipes."
+            },
+            {
+              "object": "object",
+              "name": "Another List",
+              "id": "object456",
+              "snippet": "This is another list."
+            }
+          ],
+          "get-list-items": [
+            {
+              "object": "object",
+              "name": "First Recipe",
+              "id": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1ac",
+              "snippet": "This is the snippet of the object."
+            },
+            {
+              "object": "object",
+              "name": "Another Recipe",
+              "id": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc3djvdeqoydj23b6d7ou",
+              "snippet": "This is the snippet of another object."
+            }
+          ]
+        },
+        "expected": [
+          {
+            "callsTool": {
+              "name": "get-spaces",
+              "arguments": {}
+            }
+          },
+          {
+            "callsTool": {
+              "name": "search-space",
+              "arguments": {
+                "spaceId": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d",
+                "query": "recipes"
+              }
+            }
+          },
+          {
+            "callsTool": {
+              "name": "get-list-items",
+              "arguments": {
+                "spaceId": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d",
+                "listId": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1ac"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "input": "@anytype what's written in the 'privacy policy' page?",
+        "mocks": {
+          "search-anytype": [
+            {
+              "object": "object",
+              "name": "privacy policy",
+              "id": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1ac",
+              "space_id": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d",
+              "snippet": "This is the snippet of the object."
+            },
+            {
+              "object": "object",
+              "name": "terms of service",
+              "id": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc3djvdeqoydj23b6d7ou",
+              "space_id": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d",
+              "snippet": "This is the snippet of another object."
+            }
+          ],
+          "get-object": [
+            {
+              "object": "object",
+              "name": "Privacy Policy",
+              "id": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1ac",
+              "space_id": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d",
+              "snippet": "This is the snippet of the object.",
+              "markdown": "# Privacy Policy\n\n Our privacy policy is the following:\n 1. We don't share your data with third parties.\n 2..."
+            }
+          ]
+        },
+        "expected": [
+          {
+            "callsTool": {
+              "name": "search-anytype",
+              "arguments": {
+                "query": "privacy policy"
+              }
+            }
+          },
+          {
+            "callsTool": {
+              "name": "get-object",
+              "arguments": {
+                "objectId": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1ac"
+              }
+            }
+          },
+          {
+            "includes": "third parties"
+          }
+        ],
+        "usedAsExample": true
+      },
+      {
+        "input": "@anytype show all my spaces",
+        "mocks": {
+          "get-spaces": [
+            {
+              "object": "space",
+              "id": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d",
+              "name": "My Personal Space"
+            }
+          ]
+        },
+        "expected": [
+          {
+            "callsTool": {
+              "name": "get-spaces",
+              "arguments": {}
+            }
+          }
+        ],
+        "usedAsExample": false
+      },
+      {
+        "input": "@anytype get all types in my personal space",
+        "mocks": {
+          "get-spaces": [
+            {
+              "object": "space",
+              "id": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d",
+              "name": "My Personal Space"
+            }
+          ],
+          "get-types": [
+            {
+              "object": "type",
+              "name": "Page",
+              "id": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1pp",
+              "type_key": "page",
+              "layout": "basic"
+            }
+          ]
+        },
+        "expected": [
+          {
+            "callsTool": {
+              "name": "get-spaces",
+              "arguments": {}
+            }
+          },
+          {
+            "callsTool": {
+              "name": "get-types",
+              "arguments": {
+                "spaceId": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d"
+              }
+            }
+          }
+        ],
+        "usedAsExample": false
+      },
+      {
+        "input": "@anytype remove the garlic pasta recipe from the 'recipe' list in my personal space",
+        "mocks": {
+          "get-spaces": [
+            {
+              "object": "space",
+              "id": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d",
+              "name": "My Personal Space"
+            }
+          ],
+          "search-space": [
+            {
+              "object": "object",
+              "name": "recipes",
+              "id": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1ac",
+              "snippet": "This is a collection of recipes."
+            }
+          ],
+          "get-list-items": [
+            {
+              "object": "object",
+              "name": "Garlic Pasta Recipe",
+              "id": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1ac",
+              "snippet": "This is the snippet of the object."
+            }
+          ],
+          "remove-from-list": []
+        },
+        "expected": [
+          {
+            "callsTool": {
+              "name": "get-spaces",
+              "arguments": {}
+            }
+          },
+          {
+            "callsTool": {
+              "name": "search-space",
+              "arguments": {
+                "spaceId": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d",
+                "query": "recipe"
+              }
+            }
+          },
+          {
+            "callsTool": {
+              "name": "get-list-items",
+              "arguments": {
+                "spaceId": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d",
+                "listId": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1ac"
+              }
+            }
+          },
+          {
+            "callsTool": {
+              "name": "remove-from-list",
+              "arguments": {
+                "spaceId": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d",
+                "listId": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1ac",
+                "objectIds": [
+                  "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc1djvdeqoydj23b6d1ac"
+                ]
+              }
+            }
+          }
+        ],
+        "usedAsExample": true
+      },
+      {
+        "input": "@anytype search for objects globally",
+        "mocks": {
+          "search-anytype": [
+            {
+              "object": "object",
+              "name": "First Object",
+              "id": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc3djvdeqoydj23b6d7ou",
+              "space_id": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d",
+              "snippet": "This is the snippet of the object."
+            },
+            {
+              "object": "object",
+              "id": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc3djvdeqoydj23b6d1jd",
+              "name": "Another Object",
+              "spaceId": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d",
+              "snippet": "This is the snippet of another object."
+            }
+          ]
+        },
+        "expected": [
+          {
+            "callsTool": {
+              "name": "search-anytype",
+              "arguments": {}
+            }
+          }
+        ],
+        "usedAsExample": false
+      },
+      {
+        "input": "@anytype search for recently modified objects in my personal space",
+        "mocks": {
+          "get-spaces": [
+            {
+              "object": "space",
+              "id": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d",
+              "name": "My Personal Space"
+            }
+          ],
+          "search-space": [
+            {
+              "object": "object",
+              "name": "First Object",
+              "id": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc3djvdeqoydj23b6d7hh",
+              "snippet": "This is the snippet of the object."
+            },
+            {
+              "object": "object",
+              "name": "Another Object",
+              "id": "bafyreigs5crqbryk2sq45ig4p6uqkcbmntuyosc3djvdeqoydj23b6d7kk",
+              "snippet": "This is the snippet of another object."
+            }
+          ]
+        },
+        "expected": [
+          {
+            "callsTool": {
+              "name": "get-spaces",
+              "arguments": {}
+            }
+          },
+          {
+            "callsTool": {
+              "name": "search-space",
+              "arguments": {
+                "spaceId": "bafyreihliylimyqct7vbyc2jqsoanibku656jj4uwwhulx4tctb4qw346q.2lcu0r85yg10d",
+                "query": "",
+                "sort.propertyKey": "last_modified_date",
+                "sort.direction": "desc"
+              }
+            }
+          }
+        ],
+        "usedAsExample": true
+      }
+    ]
+  },
+  "preferences": [
+    {
+      "name": "anytypeApp",
+      "title": "Anytype App",
+      "description": "The Anytype app on your Mac.",
+      "type": "appPicker",
+      "default": "com.anytype.anytype",
+      "required": false
+    },
+    {
+      "name": "primaryAction",
+      "title": "Primary Action",
+      "description": "Choose the primary action when an object is selected.",
+      "type": "dropdown",
+      "data": [
+        {
+          "title": "Show Details",
+          "value": "show_details"
+        },
+        {
+          "title": "Open Object in Anytype",
+          "value": "open_object"
+        }
+      ],
+      "default": "show_details",
+      "required": false
+    },
+    {
+      "name": "sort",
+      "title": "Sort Order",
+      "description": "The sort order of objects when displayed as a list.",
+      "type": "dropdown",
+      "data": [
+        {
+          "title": "Creation Date",
+          "value": "created_date"
+        },
+        {
+          "title": "Last Modified Date",
+          "value": "last_modified_date"
+        },
+        {
+          "title": "Last Opened Date",
+          "value": "last_opened_date"
+        },
+        {
+          "title": "Name",
+          "value": "name"
+        }
+      ],
+      "default": "last_modified_date",
+      "required": false
+    },
+    {
+      "name": "limit",
+      "title": "API Limit",
+      "description": "The maximum number of objects to fetch from the Anytype API at once. Be careful when changing this, as a large number can cause performance issues.",
+      "type": "dropdown",
+      "data": [
+        {
+          "title": "50",
+          "value": "50"
+        },
+        {
+          "title": "100",
+          "value": "100"
+        },
+        {
+          "title": "200",
+          "value": "200"
+        }
+      ],
+      "default": "100",
+      "required": false
+    },
+    {
+      "name": "linkDisplay",
+      "title": "Link Display",
+      "description": "Choose how to display URLs and email addresses in sidebar: as plain text or as clickable links.",
+      "type": "dropdown",
+      "data": [
+        {
+          "title": "Show as Text",
+          "value": "text"
+        },
+        {
+          "title": "Clickable Link",
+          "value": "link"
+        }
+      ],
+      "default": "text",
+      "required": false
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^1.93.1",
+    "@raycast/utils": "^1.17.0",
+    "date-fns": "^4.1.0",
+    "emoji-regex": "^10.4.0",
+    "lodash": "^4.17.21",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "^1.0.11",
+    "@types/lodash": "^4.17.16",
+    "@types/node": "20.8.10",
+    "@types/react": "18.3.3",
+    "eslint": "^8.57.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
+    "prettier": "^3.3.3",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "react-devtools": "^5.2.0",
+    "typescript": "^5.4.5"
+  },
+  "scripts": {
+    "build": "ray build",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint",
+    "type-check": "tsc --noEmit",
+    "prepublishOnly": "echo \"\\n\\nIt seems like you are trying to publish the Raycast extension to npm.\\n\\nIf you did intend to publish it to npm, remove the \\`prepublishOnly\\` script and rerun \\`npm publish\\` again.\\nIf you wanted to publish it to the Raycast Store instead, use \\`npm run publish\\` instead.\\n\\n\" && exit 1",
+    "publish": "npx @raycast/api@latest publish",
+    "prepare": "husky",
+    "evals": "npx ray evals"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  }
+}

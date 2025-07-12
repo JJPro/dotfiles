@@ -1,0 +1,23 @@
+#!/bin/zsh
+# Required parameters:
+# @raycast.schemaVersion 1
+# @raycast.title static-routes
+# @raycast.mode compact
+
+# Optional parameters:
+# @raycast.icon 🤖
+
+# Documentation:
+# @raycast.description 静态路由
+# @raycast.author jason_ji
+# @raycast.authorURL https://raycast.com/jason_ji
+
+# Enable Touch ID for sudo if not already enabled
+# Add to /etc/pam.d/sudo:
+# auth sufficient pam_tid.so
+
+sudo route -n add -net 10.0.0.0/8 172.16.1.115
+sudo route -n add -net 192.168.20.0/24 172.16.1.115
+sudo route -n add -net 101.231.93.226/32 172.16.1.115
+sudo route -n add -net 192.168.10.0/24 172.16.3.168
+
